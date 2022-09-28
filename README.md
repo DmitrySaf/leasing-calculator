@@ -1,1 +1,1 @@
-<h1>Car leasing calculator</h1>
+<h1 align="center">Car leasing calculator</h1>
