@@ -7,22 +7,56 @@
   grid-template-columns: repeat(3, 1fr);
   align-items: flex-end;
   column-gap: 2rem;
+  @include media-breakpoint-down($desktop-normal-down) {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 2.75rem;
+    @include media-breakpoint-down($tablet-small-down) {
+      grid-template-columns: 100%;
+      row-gap: 0;
+    }
+  }
   &__column {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: .5rem;
+    @include media-breakpoint-down($tablet-small-down) {
+      gap: .125rem;
+      &:first-child {
+        margin-bottom: 1.8125rem;
+      }
+      &:nth-child(2) {
+        margin-bottom: 2rem;
+      }
+    }
   }
   &__label {
     font-family: 'Gilroy';
     font-size: $font-size-small;
-    line-height: $line-height-small;
+    line-height: $line-height-small-result;
     color: $color-gray-light;
+    @include media-breakpoint-down($tablet-small-down) {
+      font-size: $font-size-mobile-small;
+      line-height: $line-height-mobile-small;
+    }
   }
   &__value {
+    display: flex;
     font-size: $font-size-largest;
     line-height: $line-height-largest;
     color: $color-gray-darkest;
+    @include media-breakpoint-down($tablet-small-down) {
+      font-size: $font-size-mobile-medium;
+      line-height: $line-height-mobile-medium;
+    }
+  }
+  &__value-ruble {
+    white-space: pre-wrap;
+    line-height: 2.3125rem;
+    @include media-breakpoint-down($tablet-small-down) {
+      font-size: $font-size-mobile-medium;
+      line-height: 1rem;
+    }
   }
   &__button {
     font-family: 'Nekst';
@@ -34,5 +68,11 @@
     font-size: $font-size-large;
     line-height: $font-size-large;
     color: #fff;
+    cursor: pointer;
+    @include media-breakpoint-down($tablet-small-down) {
+      height: $size-height-main-mobile;
+      font-size: $font-size-mobile-medium;
+      line-height: $line-height-mobile-medium;
+    }
   }
 }

@@ -7,6 +7,14 @@
   grid-template-columns: repeat(3, 1fr);
   column-gap: 2rem;
   margin-bottom: 51px;
+  @include media-breakpoint-down($desktop-normal-down) {
+    grid-template-columns: 100%;
+    row-gap: 39px;
+    @include media-breakpoint-down($tablet-small-down) {
+      row-gap: 25px;
+      margin-bottom: 25px;
+    }
+  }
 }
 
 .input {
@@ -20,6 +28,14 @@
   line-height: $line-height-large;
   font-family: 'Nekst';
   transition: .3s all;
+  display: flex;
+  @include media-breakpoint-down($tablet-small-down) {
+    font-size: $font-size-mobile-medium;
+    line-height: $line-height-mobile-medium;
+    color: $color-gray-graphit;
+    height: $size-height-main-mobile;
+    padding: 20px;
+  }
   &:focus {
     background-color: #fff;
     outline: none;
@@ -27,18 +43,24 @@
   }
   &__wrapper {
     position: relative;
-    height: max-content;
   }
   &__label {
     font-family: 'Gilroy';
     font-size: $font-size-small;
-    line-height: $line-height-small;
+    line-height: $line-height-small-input;
+    @include media-breakpoint-down($tablet-small-down) {
+      font-size: $font-size-mobile-small;
+      line-height: $line-height-mobile-small;
+    }
   }
   &__container {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     width: 100%;
+    @include media-breakpoint-down($tablet-small-down) {
+      gap: .5rem;
+    }
   }
   &__unit {
     position: absolute;
@@ -48,16 +70,42 @@
     width: max-content;
     height: max-content;
     font-size: $font-size-large;
-    line-height: $line-height-large;
-    &_filled {
+    line-height: 110%;
+    @include media-breakpoint-down($tablet-small-down) {
+      font-size: $font-size-mobile-medium;
+      line-height: $line-height-mobile-medium;
+      color: $color-gray-graphit;
+    }
+    &_aligned {
+      white-space: pre-wrap;
+      line-height: 31px;
+      @include media-breakpoint-down($tablet-small-down) {
+        line-height: 17px;
+      }
+    }
+    &_theme_payment {
+      position: absolute;
+      font-family: 'Nekst';
       right: 7px;
+      border: none;
       width: 69px;
-      height: 3rem;
+      height: 3.375rem;
+      line-height: 3.375rem;
       border-radius: $border-radius-input;
       background-color: $color-gray-unit-filled;
       font-size: $font-size-medium;
       text-align: center;
-      line-height: 3rem;
+      @include media-breakpoint-down($tablet-small-down) {
+        right: 6px;
+        font-size: $font-size-mobile-medium;
+        line-height: 3rem;
+        height: 3rem;
+      }
+      &:focus {
+        background-color: #fff;
+        outline: none;
+        box-shadow: inset 1px 1px $color-gray-lightest, inset -1px -1px $color-gray-lightest;
+      }
     }
   }
 }

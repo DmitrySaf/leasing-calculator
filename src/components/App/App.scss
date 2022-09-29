@@ -1,3 +1,6 @@
+@import "../../assets/styles/_variables";
+@import "../../assets/styles/mixins";
+
 .app {
   max-width: 1440px;
   height: 100vh;
@@ -5,4 +8,17 @@
   display: flex;
   align-items: center;
   margin: 0 auto;
+  @include media-breakpoint-down($desktop-normal-down) {
+    align-items: unset;
+    height: max-content;
+    padding-top: 6.25rem;
+    padding-bottom: 7.5rem;
+    justify-content: center;
+    @include media-breakpoint-down($tablet-portrait-down) {
+      padding: 4rem 2.25rem 9.75rem;
+      @include media-breakpoint-down($tablet-small-down) {
+        padding: 2.75rem 1.25rem 4rem;
+      }
+    }
+  }
 }

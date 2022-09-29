@@ -2,11 +2,19 @@
 @import "../../assets/styles/mixins";
 
 .calculator {
+  width: 100%;
   &__title {
     margin: 0;
     max-width: 753px;
     font-size: $font-size-largest;
     line-height: $line-height-largest;
     margin-bottom: 2rem;
+    @include media-breakpoint-down($desktop-normal-down) {
+      margin-bottom: 2.75rem;
+      @include media-breakpoint-down($tablet-small-down) {
+        font-size: $font-size-mobile-large;
+        margin-bottom: 2rem;
+      }
+    }
   }
 }
