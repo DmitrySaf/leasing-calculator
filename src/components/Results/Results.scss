@@ -1,0 +1,38 @@
+@import "../../assets/styles/variables";
+@import "../../assets/styles/mixins";
+
+.results {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: flex-end;
+  column-gap: 2rem;
+  &__column {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+  &__label {
+    font-family: 'Gilroy';
+    font-size: $font-size-small;
+    line-height: $line-height-small;
+    color: $color-gray-light;
+  }
+  &__value {
+    font-size: $font-size-largest;
+    line-height: $line-height-largest;
+    color: $color-gray-darkest;
+  }
+  &__button {
+    font-family: 'Nekst';
+    width: 100%;
+    height: $size-height-main;
+    border: none;
+    border-radius: $border-radius-button;
+    background-color: $color-primary;
+    font-size: $font-size-large;
+    line-height: $font-size-large;
+    color: #fff;
+  }
+}

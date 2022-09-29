@@ -1,0 +1,12 @@
+@import "../../assets/styles/_variables";
+@import "../../assets/styles/mixins";
+
+.calculator {
+  &__title {
+    margin: 0;
+    max-width: 753px;
+    font-size: $font-size-largest;
+    line-height: $line-height-largest;
+    margin-bottom: 2rem;
+  }
+}
