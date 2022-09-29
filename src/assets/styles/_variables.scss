@@ -6,6 +6,7 @@ $color-gray-dark: #333333;
 $color-gray-graphit: #333E48;
 $color-gray-light: #575757;
 $color-gray-lightest: #F3F3F4;
+$color-gray-unit-filled: #EBEBEC;
 
 // font-sizes
 
@@ -31,7 +32,12 @@ $line-height-mobile-small: 136%;
 // border-radiuses
 
 $border-radius-input: 16px;
-$border-radius-button: 16px;
+$border-radius-button: 40px;
+
+// sizes
+
+$size-height-main: 68px;
+$size-height-main-mobile: 60px;
 
 // screen breakpoints
 
