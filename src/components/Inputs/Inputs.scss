@@ -53,6 +53,11 @@
   }
   &__wrapper {
     position: relative;
+    &_theme_percent:focus-within {
+      background-color: #fff;
+      outline: none;
+      box-shadow: inset 1px 1px $color-gray-lightest, inset -1px -1px $color-gray-lightest;
+    }
     &_theme_percent {
       position: absolute;
       top: 50%;
@@ -72,11 +77,6 @@
         right: 6px;
         height: 3rem;
       }
-    }
-    &_focused {
-      background-color: #fff;
-      outline: none;
-      box-shadow: inset 1px 1px $color-gray-lightest, inset -1px -1px $color-gray-lightest;
     }
   }
   &__label {
