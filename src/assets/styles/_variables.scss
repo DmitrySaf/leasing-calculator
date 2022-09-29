@@ -10,7 +10,7 @@ $color-gray-unit-filled: #EBEBEC;
 
 // font-sizes
 
-$font-size-largest: 3rem;
+$font-size-largest: 3.375rem;
 $font-size-large: 1.875rem;
 $font-size-medium: 1.25rem;
 $font-size-small: 1rem;
@@ -41,8 +41,6 @@ $size-height-main-mobile: 60px;
 
 // screen breakpoints
 
-$desktop-large-up: 1800px;
-$desktop-normal-down: 1200px;
-$desktop-small-down: 992px;
-$tablet-portrait-down: 767px;
-$phone-normal-down: 575px;
+$desktop-normal-down: 1440px;
+$tablet-portrait-down: 1024px;
+$tablet-small-down: 768px;
