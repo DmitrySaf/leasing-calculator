@@ -41,8 +41,43 @@
     outline: none;
     box-shadow: inset 1px 1px $color-gray-lightest, inset -1px -1px $color-gray-lightest;
   }
+  &_theme_percent {
+    all: unset;
+    position: absolute;
+    width: max-content;
+    max-width: 32px;
+    left: 50%;
+    transform: translateX(-57%);
+    font-size: $font-size-medium;
+    line-height: $line-height-medium;
+  }
   &__wrapper {
     position: relative;
+    &_theme_percent {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 7px;
+      border: none;
+      width: 69px;
+      height: 3.375rem;
+      border-radius: $border-radius-input;
+      background-color: $color-gray-unit-filled;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2px;
+      transition: .3s all;
+      @include media-breakpoint-down($tablet-small-down) {
+        right: 6px;
+        height: 3rem;
+      }
+    }
+    &_focused {
+      background-color: #fff;
+      outline: none;
+      box-shadow: inset 1px 1px $color-gray-lightest, inset -1px -1px $color-gray-lightest;
+    }
   }
   &__label {
     font-family: 'Gilroy';
@@ -83,29 +118,16 @@
         line-height: 17px;
       }
     }
-    &_theme_payment {
-      position: absolute;
-      font-family: 'Nekst';
-      right: 7px;
-      border: none;
-      width: 69px;
-      height: 3.375rem;
-      line-height: 3.375rem;
-      border-radius: $border-radius-input;
-      background-color: $color-gray-unit-filled;
+    &_theme_percent {
+      position: initial;
       font-size: $font-size-medium;
-      text-align: center;
-      @include media-breakpoint-down($tablet-small-down) {
-        right: 6px;
-        font-size: $font-size-mobile-medium;
-        line-height: 3rem;
-        height: 3rem;
-      }
-      &:focus {
-        background-color: #fff;
-        outline: none;
-        box-shadow: inset 1px 1px $color-gray-lightest, inset -1px -1px $color-gray-lightest;
-      }
+      line-height: $line-height-medium;
+      transform: unset;
+    }
+    &_hidden {
+      visibility: hidden;
+      font-size: $font-size-medium;
+      line-height: $line-height-medium;
     }
   }
 }
