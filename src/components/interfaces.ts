@@ -5,6 +5,7 @@ interface IUnformattedState {
 }
 
 interface IFormattedState {
+  [i: string]: number,
   carPrice: number,
   firstPayment: number,
   period: number

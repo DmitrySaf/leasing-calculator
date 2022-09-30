@@ -1,8 +1,6 @@
 import {
   useRef,
-  useReducer,
-  useState,
-  useEffect
+  useState
 } from 'react';
 
 import { InitialValues, IUnformattedState, IAction, IFormattedState } from "../interfaces";
@@ -15,15 +13,6 @@ interface Event {
   }
 }
 
-const reducer = (state: IUnformattedState, action: IAction) => {
-  switch (action.type) {
-    case 'carPrice': return {...state, carPrice: +state.carPrice.replace('/\s/g', '')};
-    case 'carPrice': return {...state, carPrice: +state.carPrice.replace('/\s/g', '')};
-    case 'carPrice': return {...state, carPrice: +state.carPrice.replace('/\s/g', '')};
-  }
-  return state
-}
-
 interface InputsProps {
   initialValues: InitialValues,
   handleChange: (values: IFormattedState) => void
@@ -31,7 +20,7 @@ interface InputsProps {
 
 const Inputs = ({initialValues, handleChange}: InputsProps) => {
   const firstPaymentRef = useRef<HTMLInputElement>(null);
-  const [state, setState] = useState({
+  const [state, setState] = useState<IFormattedState>({
     carPrice: initialValues.carPrice.value,
     firstPayment: initialValues.firstPayment.value,
     period: initialValues.period.value
@@ -58,6 +47,12 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
     return value;
   }
 
+  const valueToPercent = (name: string) => {
+    if (state[name] > initialValues[name].max) return 100;
+    if (state[name] < initialValues[name].min) return 1;
+    return Number(state[name]) / initialValues[name].max * 100
+  }
+
   return (
     <div className="inputs">
       <div className="input__container">
@@ -74,6 +69,10 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
             autoComplete="off"
           />
           <div className="input__unit">₽</div>
+          <div className="input__range-slider">
+            <div className="input__range-slider-bar" style={{"width": `${valueToPercent('carPrice')}%`}}></div>
+            <div className="input__range-slider-circle" style={{"left": `${valueToPercent('carPrice')}%`}}></div>
+          </div>
         </div>
       </div>
       <div className="input__container">
@@ -98,6 +97,10 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
             <div className="input__unit_hidden">{state.firstPayment}</div>
             <div className="input__unit input__unit_theme_percent">%</div>
           </div>
+          <div className="input__range-slider">
+            <div className="input__range-slider-bar" style={{"width": `${valueToPercent('firstPayment')}%`}}></div>
+            <div className="input__range-slider-circle" style={{"left": `${valueToPercent('firstPayment')}%`}}></div>
+          </div>
         </div>
       </div>
       <div className="input__container">
@@ -114,6 +117,10 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
             autoComplete="off"
           />
           <div className="input__unit">мес.</div>
+          <div className="input__range-slider">
+            <div className="input__range-slider-bar" style={{"width": `${valueToPercent('period')}%`}}></div>
+            <div className="input__range-slider-circle" style={{"left": `${valueToPercent('period')}%`}}></div>
+          </div>
         </div>
       </div>
     </div>
