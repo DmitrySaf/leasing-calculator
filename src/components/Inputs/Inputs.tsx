@@ -10,7 +10,15 @@ import './Inputs.scss';
 interface Event {
   target: {
     value: string
-  }
+  },
+  preventDefault: () => void
+}
+
+interface PointerEvent {
+  target: any;
+  pageX: number,
+  currentTarget: HTMLDivElement,
+  preventDefault: () => void
 }
 
 interface InputsProps {
@@ -41,16 +49,42 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
 
   const valuesValidation = (e: Event, name: string) => {
     const value = +e.target.value.replace(/\s+/g, '');
+    const { max, min } = initialValues[name];
 
-    if (value > initialValues[name].max) return initialValues[name].max;
-    if (value < initialValues[name].min) return initialValues[name].min;
+    if (value > max) return max;
+    if (value < min) return min;
     return value;
   }
 
   const valueToPercent = (name: string) => {
-    if (state[name] > initialValues[name].max) return 100;
-    if (state[name] < initialValues[name].min) return 1;
-    return Number(state[name]) / initialValues[name].max * 100
+    const { max, min } = initialValues[name];
+
+    if (state[name] > max) return 100;
+    if (state[name] < min) return 1;
+    return ((+state[name] - min) / (max - min)) * 100;
+  }
+
+  const onMouseDown = (event: PointerEvent, name: string) => {
+    event.preventDefault();
+
+    const { max, min } = initialValues[name];
+    const slider = event.target.offsetParent;
+    const sliderWidth = slider.offsetWidth;
+
+    const mousemove = (e: { pageX: number }) => {
+      const value = e.pageX - slider.getBoundingClientRect().left;
+      const val1 = Math.round((value / sliderWidth) * (max - min) + min);
+      if (val1 > max) return;
+      if (val1 < min) return;
+      setState({...state, [name]: val1});
+    };
+    const mouseup = () => {
+      document.removeEventListener('mousemove', mousemove);
+      document.removeEventListener('mouseup', mouseup);
+      handleChange(state);
+    };
+    document.addEventListener('mousemove', mousemove);
+    document.addEventListener('mouseup', mouseup);
   }
 
   return (
@@ -71,7 +105,11 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
           <div className="input__unit">₽</div>
           <div className="input__range-slider">
             <div className="input__range-slider-bar" style={{"width": `${valueToPercent('carPrice')}%`}}></div>
-            <div className="input__range-slider-circle" style={{"left": `${valueToPercent('carPrice')}%`}}></div>
+            <div
+              className="input__range-slider-circle"
+              style={{"left": `${valueToPercent('carPrice')}%`}}
+              onMouseDown={(e) => onMouseDown(e, 'carPrice')}
+            ></div>
           </div>
         </div>
       </div>
@@ -90,16 +128,17 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
               ref={firstPaymentRef}
               value={bringToFormat(state.firstPayment)}
               onBlur={e => onBlur(e, 'firstPayment')}
-            onChange={e => onChange(e, 'firstPayment')}
+              onChange={e => onChange(e, 'firstPayment')}
               className="input_theme_percent"
               autoComplete="off"
             />
-            <div className="input__unit_hidden">{state.firstPayment}</div>
+            <div className="input__unit_hidden">{state.firstPayment.toFixed(0)}</div>
             <div className="input__unit input__unit_theme_percent">%</div>
           </div>
           <div className="input__range-slider">
             <div className="input__range-slider-bar" style={{"width": `${valueToPercent('firstPayment')}%`}}></div>
-            <div className="input__range-slider-circle" style={{"left": `${valueToPercent('firstPayment')}%`}}></div>
+            <div className="input__range-slider-circle" style={{"left": `${valueToPercent('firstPayment')}%`}}
+              onMouseDown={(e) => onMouseDown(e, 'firstPayment')}></div>
           </div>
         </div>
       </div>
@@ -119,7 +158,8 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
           <div className="input__unit">мес.</div>
           <div className="input__range-slider">
             <div className="input__range-slider-bar" style={{"width": `${valueToPercent('period')}%`}}></div>
-            <div className="input__range-slider-circle" style={{"left": `${valueToPercent('period')}%`}}></div>
+            <div className="input__range-slider-circle" style={{"left": `${valueToPercent('period')}%`}}
+            onMouseDown={(e) => onMouseDown(e, 'period')}></div>
           </div>
         </div>
       </div>
