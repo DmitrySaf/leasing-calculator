@@ -69,6 +69,13 @@
     line-height: $font-size-large;
     color: #fff;
     cursor: pointer;
+    transition: .3s all;
+    &:hover {
+      background-color: $color-gray-darkest;
+    }
+    &:disabled {
+      opacity: .4;
+    }
     @include media-breakpoint-down($tablet-small-down) {
       height: $size-height-main-mobile;
       font-size: $font-size-mobile-medium;

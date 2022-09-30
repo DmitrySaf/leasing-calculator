@@ -23,6 +23,7 @@
   border: none;
   border-radius: $border-radius-input;
   background-color: $color-gray-lightest;
+  color: $color-gray-light;
   padding: 1rem 1.5rem;
   font-size: $font-size-large;
   line-height: $line-height-large;
@@ -73,6 +74,7 @@
       align-items: center;
       gap: 2px;
       transition: .3s all;
+      color: $color-gray-light;
       @include media-breakpoint-down($tablet-small-down) {
         right: 6px;
         height: 3rem;
@@ -106,6 +108,7 @@
     height: max-content;
     font-size: $font-size-large;
     line-height: 110%;
+    color: $color-gray-light;
     @include media-breakpoint-down($tablet-small-down) {
       font-size: $font-size-mobile-medium;
       line-height: $line-height-mobile-medium;

@@ -1,21 +1,62 @@
-import { useRef, useReducer, useState } from 'react';
+import {
+  useRef,
+  useReducer,
+  useState,
+  useEffect
+} from 'react';
 
-import { IValues, IValuesMinMax } from "../interfaces";
+import { InitialValues, IUnformattedState, IAction, IFormattedState } from "../interfaces";
 
 import './Inputs.scss';
 
+interface Event {
+  target: {
+    value: string
+  }
+}
 
-
-/* const reducer = (state: IState, action: IAction) => {
-
+const reducer = (state: IUnformattedState, action: IAction) => {
+  switch (action.type) {
+    case 'carPrice': return {...state, carPrice: +state.carPrice.replace('/\s/g', '')};
+    case 'carPrice': return {...state, carPrice: +state.carPrice.replace('/\s/g', '')};
+    case 'carPrice': return {...state, carPrice: +state.carPrice.replace('/\s/g', '')};
+  }
   return state
-} */
+}
 
-const Inputs = ({initialValues, valuesMinMax}: {initialValues: IValues, valuesMinMax: IValuesMinMax}) => {
-  const paymentRef = useRef<HTMLInputElement>(null);
-  const [carPrice, setCarPrice] = useState(initialValues.carPrice);
-  const [payment, setPayment] = useState(initialValues.payment);
-  const [period, setPeriod] = useState(initialValues.period);
+interface InputsProps {
+  initialValues: InitialValues,
+  handleChange: (values: IFormattedState) => void
+}
+
+const Inputs = ({initialValues, handleChange}: InputsProps) => {
+  const firstPaymentRef = useRef<HTMLInputElement>(null);
+  const [state, setState] = useState({
+    carPrice: initialValues.carPrice.value,
+    firstPayment: initialValues.firstPayment.value,
+    period: initialValues.period.value
+  });
+
+  const onBlur = (e: Event, name: string) => {
+    setState({...state, [name]: valuesValidation(e, name)});
+    handleChange({...state, [name]: valuesValidation(e, name)});
+  };
+
+  const onChange = (e: Event, name: string) => {
+    setState({...state, [name]: +e.target.value.replace(/\s+/g, '')});
+  }
+
+  const bringToFormat = (number: number) => {
+    return (+number.toFixed(0)).toLocaleString();
+  }
+
+  const valuesValidation = (e: Event, name: string) => {
+    const value = +e.target.value.replace(/\s+/g, '');
+
+    if (value > initialValues[name].max) return initialValues[name].max;
+    if (value < initialValues[name].min) return initialValues[name].min;
+    return value;
+  }
 
   return (
     <div className="inputs">
@@ -26,8 +67,9 @@ const Inputs = ({initialValues, valuesMinMax}: {initialValues: IValues, valuesMi
             name="car-price"
             type="text"
             id="car-price"
-            value={carPrice.toLocaleString()}
-            onChange={(e) => setCarPrice(+e.target.value)}
+            value={bringToFormat(state.carPrice)}
+            onBlur={e => onBlur(e, 'carPrice')}
+            onChange={e => onChange(e, 'carPrice')}
             className="input"
             autoComplete="off"
           />
@@ -37,22 +79,23 @@ const Inputs = ({initialValues, valuesMinMax}: {initialValues: IValues, valuesMi
       <div className="input__container">
         <label htmlFor="payment" className="input__label">Первоначальный взнос</label>
         <div className="input__wrapper">
-          <div onClick={() => paymentRef.current?.focus()} className="input">
-            {(payment * carPrice / 100).toLocaleString()}
+          <div onClick={() => firstPaymentRef.current?.focus()} className="input">
+            {bringToFormat(state.firstPayment * state.carPrice / 100)}
             <div className="input__unit_aligned"> ₽</div>
           </div>
           <div className="input__wrapper_theme_percent">
             <input
-              name="payment"
+              name="firstPayment"
               type="text"
-              id="payment"
-              ref={paymentRef}
-              value={payment}
-              onChange={(e) => setPayment(+e.target.value)}
+              id="firstPayment"
+              ref={firstPaymentRef}
+              value={bringToFormat(state.firstPayment)}
+              onBlur={e => onBlur(e, 'firstPayment')}
+            onChange={e => onChange(e, 'firstPayment')}
               className="input_theme_percent"
               autoComplete="off"
             />
-            <div className="input__unit_hidden">{payment}</div>
+            <div className="input__unit_hidden">{state.firstPayment}</div>
             <div className="input__unit input__unit_theme_percent">%</div>
           </div>
         </div>
@@ -64,8 +107,9 @@ const Inputs = ({initialValues, valuesMinMax}: {initialValues: IValues, valuesMi
             name="period"
             type="text"
             id="period"
-            value={period}
-            onChange={(e) => setPeriod(+e.target.value)}
+            value={state.period}
+            onBlur={e => onBlur(e, 'period')}
+            onChange={e => onChange(e, 'period')}
             className="input"
             autoComplete="off"
           />
