@@ -161,5 +161,6 @@
     transform: translate(-50%, -50%);
     border-radius: 50%;
     cursor: pointer;
+    touch-action: none;
   }
 }

@@ -71,20 +71,21 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
     const slider = event.target.offsetParent;
     const sliderWidth = slider.offsetWidth;
 
-    const mousemove = (e: { pageX: number }) => {
-      const value = e.pageX - slider.getBoundingClientRect().left;
-      const val1 = Math.round((value / sliderWidth) * (max - min) + min);
-      if (val1 > max) return;
-      if (val1 < min) return;
-      setState({...state, [name]: val1});
+    const pointermove = (e: { pageX: number }) => {
+      const leftValue = e.pageX - slider.getBoundingClientRect().left;
+      const value = Math.round((leftValue / sliderWidth) * (max - min) + min);
+      if (value > max) return setState({...state, [name]: max});
+      if (value < min) return setState({...state, [name]: min});
+      setState({...state, [name]: value});
     };
-    const mouseup = () => {
-      document.removeEventListener('mousemove', mousemove);
-      document.removeEventListener('mouseup', mouseup);
+    
+    const pointerup = () => {
+      document.removeEventListener('pointermove', pointermove);
+      document.removeEventListener('pointerup', pointerup);
       handleChange(state);
     };
-    document.addEventListener('mousemove', mousemove);
-    document.addEventListener('mouseup', mouseup);
+    document.addEventListener('pointermove', pointermove);
+    document.addEventListener('pointerup', pointerup);
   }
 
   return (
@@ -108,7 +109,7 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
             <div
               className="input__range-slider-circle"
               style={{"left": `${valueToPercent('carPrice')}%`}}
-              onMouseDown={(e) => onMouseDown(e, 'carPrice')}
+              onPointerDown={(e) => onMouseDown(e, 'carPrice')}
             ></div>
           </div>
         </div>
@@ -137,8 +138,11 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
           </div>
           <div className="input__range-slider">
             <div className="input__range-slider-bar" style={{"width": `${valueToPercent('firstPayment')}%`}}></div>
-            <div className="input__range-slider-circle" style={{"left": `${valueToPercent('firstPayment')}%`}}
-              onMouseDown={(e) => onMouseDown(e, 'firstPayment')}></div>
+            <div
+              className="input__range-slider-circle"
+              style={{"left": `${valueToPercent('firstPayment')}%`}}
+              onPointerDown={(e) => onMouseDown(e, 'firstPayment')}
+            ></div>
           </div>
         </div>
       </div>
@@ -158,8 +162,11 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
           <div className="input__unit">мес.</div>
           <div className="input__range-slider">
             <div className="input__range-slider-bar" style={{"width": `${valueToPercent('period')}%`}}></div>
-            <div className="input__range-slider-circle" style={{"left": `${valueToPercent('period')}%`}}
-            onMouseDown={(e) => onMouseDown(e, 'period')}></div>
+            <div
+              className="input__range-slider-circle"
+              style={{"left": `${valueToPercent('period')}%`}}
+              onPointerDown={(e) => onMouseDown(e, 'period')}
+            ></div>
           </div>
         </div>
       </div>
