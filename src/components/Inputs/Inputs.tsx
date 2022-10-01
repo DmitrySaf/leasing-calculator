@@ -70,19 +70,22 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
     const { max, min } = initialValues[name];
     const slider = event.target.offsetParent;
     const sliderWidth = slider.offsetWidth;
-
+    let val1 = 0;
     const pointermove = (e: { pageX: number }) => {
       const leftValue = e.pageX - slider.getBoundingClientRect().left;
       const value = Math.round((leftValue / sliderWidth) * (max - min) + min);
+
       if (value > max) return setState({...state, [name]: max});
       if (value < min) return setState({...state, [name]: min});
+      val1 = value;
       setState({...state, [name]: value});
     };
     
     const pointerup = () => {
       document.removeEventListener('pointermove', pointermove);
       document.removeEventListener('pointerup', pointerup);
-      handleChange(state);
+      console.log(val1);
+      handleChange({...state, [name]: val1});
     };
     document.addEventListener('pointermove', pointermove);
     document.addEventListener('pointerup', pointerup);

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import Inputs from "../Inputs/Inputs";
 import Results from "../Results/Results";
@@ -31,6 +31,7 @@ const Calculator = () => {
     firstPayment: INITIAL_VALUES.firstPayment.value,
     period: INITIAL_VALUES.period.value
   });
+  const [loading, setLoading] = useState(false);
   const { carPrice, firstPayment, period } = state;
 
   const getMonthPayment = () => {
@@ -42,19 +43,33 @@ const Calculator = () => {
   };
 
   const getTotalSum = () => {
-    return (
-      firstPayment + period * getMonthPayment()
-    );
+    return firstPayment + period * getMonthPayment()
   }
 
   const handleChange = (values: IFormattedState) => {
     setState(values);
   }
 
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    fetch('https://eoj3r7f3r4ef6v4.m.pipedream.net', {
+      method: 'post',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        totalSum: getTotalSum().toFixed(0),
+        monthPayment: getMonthPayment().toFixed(0),
+        firstPayment: firstPayment * carPrice / 100,
+        carPrice,
+        period
+      })
+    }).then(() => setLoading(false));
+  }
+
   return (
     <div className="calculator">
       <h1 className="calculator__title">Рассчитайте стоимость автомобиля в лизинг</h1>
-      <form className="calculator__form">
+      <form onSubmit={onSubmit} className="calculator__form">
         <Inputs
           initialValues={INITIAL_VALUES}
           handleChange={handleChange}
@@ -62,6 +77,7 @@ const Calculator = () => {
         <Results
           totalSum={getTotalSum()}
           monthPayment={getMonthPayment()}
+          loading={loading}
         />
       </form>
     </div>
