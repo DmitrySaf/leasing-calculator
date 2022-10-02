@@ -33,5 +33,6 @@ export type {
   IUnformattedState,
   IFormattedState,
   IAction,
-  InitialValues
+  InitialValues,
+  Input
 }

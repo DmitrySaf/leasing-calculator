@@ -35,14 +35,20 @@ const Calculator = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const { carPrice, firstPayment, period } = state;
+  console.log(Math.round(
+    (carPrice * (1 - (firstPayment / 100)))
+      * ((INTEREST_RATE * Math.pow(1 + INTEREST_RATE, period))
+      / (Math.pow(1 + INTEREST_RATE, period) - 1))
+  ));
   const monthPay = Math.round(
     (carPrice * (1 - (firstPayment / 100)))
       * ((INTEREST_RATE * Math.pow(1 + INTEREST_RATE, period))
       / (Math.pow(1 + INTEREST_RATE, period) - 1))
   );
-  const totalSum =  Math.round(firstPayment * carPrice / 100 + period * monthPay);
+  const totalSum = Math.round((firstPayment * carPrice / 100) + period * monthPay);
 
   const handleChange = (values: IFormattedState) => {
+    console.log(values);
     setState(values);
   }
 
