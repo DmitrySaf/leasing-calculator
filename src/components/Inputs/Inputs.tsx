@@ -121,10 +121,10 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
           />
           <div className="input__unit">₽</div>
           <div className="input__range-slider">
-            <div className="input__range-slider-bar" style={{"width": `${valueToPercent('carPrice')}%`}}></div>
+            <div className="input__range-slider-bar" style={{width: `${valueToPercent('carPrice')}%`}}></div>
             <div
               className="input__range-slider-circle"
-              style={{"left": `${valueToPercent('carPrice')}%`}}
+              style={{left: `${valueToPercent('carPrice')}%`}}
               onPointerDown={(e) => onMouseDown(e, 'carPrice')}
             ></div>
           </div>
@@ -153,10 +153,10 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
             <div className="input__unit input__unit_theme_percent">%</div>
           </div>
           <div className="input__range-slider">
-            <div className="input__range-slider-bar" style={{"width": `${valueToPercent('firstPayment')}%`}}></div>
+            <div className="input__range-slider-bar" style={{width: `${valueToPercent('firstPayment')}%`}}></div>
             <div
               className="input__range-slider-circle"
-              style={{"left": `${valueToPercent('firstPayment')}%`}}
+              style={{left: `${valueToPercent('firstPayment')}%`}}
               onPointerDown={(e) => onMouseDown(e, 'firstPayment')}
             ></div>
           </div>
@@ -177,10 +177,10 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
           />
           <div className="input__unit">мес.</div>
           <div className="input__range-slider">
-            <div className="input__range-slider-bar" style={{"width": `${valueToPercent('period')}%`}}></div>
+            <div className="input__range-slider-bar" style={{width: `${valueToPercent('period')}%`}}></div>
             <div
               className="input__range-slider-circle"
-              style={{"left": `${valueToPercent('period')}%`}}
+              style={{left: `${valueToPercent('period')}%`}}
               onPointerDown={(e) => onMouseDown(e, 'period')}
             ></div>
           </div>
