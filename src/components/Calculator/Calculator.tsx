@@ -37,6 +37,7 @@ const Calculator = () => {
   const { carPrice, firstPayment, period } = state;
 
   const getMonthPayment = () => {
+    console.log(carPrice, firstPayment, period);
     return Math.round(
       (carPrice * (1 - (firstPayment / 100)))
         * ((INTEREST_RATE * Math.pow(1 + INTEREST_RATE, period))

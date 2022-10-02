@@ -3,9 +3,13 @@ import {
   useState
 } from 'react';
 
-import { InitialValues, IUnformattedState, IAction, IFormattedState } from "../interfaces";
+import { InitialValues, IFormattedState } from "../interfaces";
 
 import './Inputs.scss';
+
+type EventOfDot = {
+  pageX: number
+}
 
 interface Event {
   target: {
@@ -40,7 +44,10 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
   };
 
   const onChange = (e: Event, name: string) => {
-    setState({...state, [name]: +e.target.value.replace(/\s+/g, '')});
+    const value = +e.target.value.replace(/\s+/g, '');
+
+    if (isNaN(value)) return;
+    setState({...state, [name]: value});
   }
 
   const bringToFormat = (number: number) => {
@@ -70,22 +77,28 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
     const { max, min } = initialValues[name];
     const slider = event.target.offsetParent;
     const sliderWidth = slider.offsetWidth;
-    let val1 = 0;
-    const pointermove = (e: { pageX: number }) => {
-      const leftValue = e.pageX - slider.getBoundingClientRect().left;
-      const value = Math.round((leftValue / sliderWidth) * (max - min) + min);
 
-      if (value > max) return setState({...state, [name]: max});
-      if (value < min) return setState({...state, [name]: min});
-      val1 = value;
+    const pointermove = (e: EventOfDot) => {
+      const value = getValueOfCoords(e);
+
       setState({...state, [name]: value});
     };
     
-    const pointerup = () => {
+    const getValueOfCoords = (e: EventOfDot) => {
+      const leftValue = e.pageX - slider.getBoundingClientRect().left;
+      const calculatedValue =  Math.round((leftValue / sliderWidth) * (max - min) + min);
+
+      if (calculatedValue > max) return max;
+      if (calculatedValue < min) return min;
+      return calculatedValue;
+    }
+
+    const pointerup = (e: EventOfDot) => {
+      const value = getValueOfCoords(e);
+  
       document.removeEventListener('pointermove', pointermove);
       document.removeEventListener('pointerup', pointerup);
-      console.log(val1);
-      handleChange({...state, [name]: val1});
+      handleChange({...state, [name]: value});
     };
     document.addEventListener('pointermove', pointermove);
     document.addEventListener('pointerup', pointerup);
