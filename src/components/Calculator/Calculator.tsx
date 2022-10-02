@@ -56,7 +56,7 @@ const Calculator = () => {
     e.preventDefault();
 
     setLoading(true);
-    fetch('https://eozk3hoyj2n4px0.m.pipedream.net', {
+    fetch('https://eoj3r7f3r4ef6v4.m.pipedream.net', {
       method: 'post',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({

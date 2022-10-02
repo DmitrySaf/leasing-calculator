@@ -1,7 +1,3 @@
-import React from 'react';
-
-import { InitialValues } from '../interfaces';
-
 import spinner from './img/spinner.svg';
 
 import './Results.scss';
@@ -11,11 +7,6 @@ interface ResultProps {
   monthPayment: string,
   loading: boolean,
   error: boolean
-}
-
-interface Event {
-  currentTarget: HTMLButtonElement,
-  preventDefault: () => void
 }
 
 const Results = ({ totalSum, monthPayment, loading, error }: ResultProps) => {
