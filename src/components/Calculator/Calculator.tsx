@@ -40,7 +40,7 @@ const Calculator = () => {
       * ((INTEREST_RATE * Math.pow(1 + INTEREST_RATE, period))
       / (Math.pow(1 + INTEREST_RATE, period) - 1))
   );
-  const totalSum =  Math.round(firstPayment + period * monthPay);
+  const totalSum =  Math.round(firstPayment * carPrice / 100 + period * monthPay);
 
   const handleChange = (values: IFormattedState) => {
     setState(values);
