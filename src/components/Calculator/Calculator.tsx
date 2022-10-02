@@ -35,18 +35,12 @@ const Calculator = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const { carPrice, firstPayment, period } = state;
-
-  const getMonthPayment = () => {
-    return Math.round(
-      (carPrice * (1 - (firstPayment / 100)))
-        * ((INTEREST_RATE * Math.pow(1 + INTEREST_RATE, period))
-        / (Math.pow(1 + INTEREST_RATE, period) - 1))
-    );
-  };
-
-  const getTotalSum = () => {
-    return Math.round(firstPayment + period * getMonthPayment());
-  }
+  const monthPay = Math.round(
+    (carPrice * (1 - (firstPayment / 100)))
+      * ((INTEREST_RATE * Math.pow(1 + INTEREST_RATE, period))
+      / (Math.pow(1 + INTEREST_RATE, period) - 1))
+  );
+  const totalSum =  Math.round(firstPayment + period * monthPay);
 
   const handleChange = (values: IFormattedState) => {
     setState(values);
@@ -60,8 +54,8 @@ const Calculator = () => {
       method: 'post',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
-        totalSum: getTotalSum(),
-        monthPayment: getMonthPayment(),
+        totalSum: monthPay,
+        monthPayment: totalSum,
         firstPayment: firstPayment * carPrice / 100,
         carPrice,
         period
@@ -88,8 +82,8 @@ const Calculator = () => {
           handleChange={handleChange}
         />
         <Results
-          totalSum={bringToFormat(getTotalSum())}
-          monthPayment={bringToFormat(getMonthPayment())}
+          totalSum={bringToFormat(totalSum)}
+          monthPayment={bringToFormat(monthPay)}
           loading={loading}
           error={error}
         />
