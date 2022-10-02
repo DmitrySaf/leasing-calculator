@@ -71,7 +71,7 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
     return ((+state[name] - min) / (max - min)) * 100;
   }
 
-  const onMouseDown = (event: PointerEvent, name: string) => {
+  const onPointerDown = (event: PointerEvent, name: string) => {
     event.preventDefault();
 
     const { max, min } = initialValues[name];
@@ -125,7 +125,7 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
             <div
               className="input__range-slider-circle"
               style={{left: `${valueToPercent('carPrice')}%`}}
-              onPointerDown={(e) => onMouseDown(e, 'carPrice')}
+              onPointerDown={(e) => onPointerDown(e, 'carPrice')}
             ></div>
           </div>
         </div>
@@ -157,7 +157,7 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
             <div
               className="input__range-slider-circle"
               style={{left: `${valueToPercent('firstPayment')}%`}}
-              onPointerDown={(e) => onMouseDown(e, 'firstPayment')}
+              onPointerDown={(e) => onPointerDown(e, 'firstPayment')}
             ></div>
           </div>
         </div>
@@ -181,7 +181,7 @@ const Inputs = ({initialValues, handleChange}: InputsProps) => {
             <div
               className="input__range-slider-circle"
               style={{left: `${valueToPercent('period')}%`}}
-              onPointerDown={(e) => onMouseDown(e, 'period')}
+              onPointerDown={(e) => onPointerDown(e, 'period')}
             ></div>
           </div>
         </div>
